@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "345643278560",
+    "project_id": "flutter-message-8ab4c",
+    "storage_bucket": "flutter-message-8ab4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345643278560:android:f11ed4eb8650cdb0d83085",
+        "android_client_info": {
+          "package_name": "com.aladin.message"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345643278560-q4o7f11vkhbu792e944r86c5tobghgq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aladin.message",
+            "certificate_hash": "83cb32bc834ba49afeb64f867aec8c333f11025a"
+          }
+        },
+        {
+          "client_id": "345643278560-oj7poep3r8fr110rkcd0at2t9cvuennt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIeokDPdbpH4XlVQLmxsRIuQGa5gnoehg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345643278560-oj7poep3r8fr110rkcd0at2t9cvuennt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
