@@ -22,6 +22,8 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       yield* _mapChangedDarkModeToState();
     } else if (event is ChangedToLightMode) {
       yield* _mapChangedToDarkModeToState();
+    } else if (event is ToggleTheme){
+      yield* _mapToggleThemeToState();
     }
   }
 
@@ -31,5 +33,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
 
   Stream<ThemeState> _mapChangedToDarkModeToState() async* {
     yield ThemeState.LightMode();
+  }
+
+  Stream<ThemeState> _mapToggleThemeToState() async*{
+
   }
 }

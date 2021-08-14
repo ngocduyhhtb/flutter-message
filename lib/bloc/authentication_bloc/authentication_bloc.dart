@@ -61,6 +61,7 @@ class AuthenticationBloc
     _secureStorage
         .readValue(App.SECURE_STORAGE_ACCESS_TOKEN)
         .then((value) => emailAccessToken = value);
+    _secureStorage.deleteValue(App.SECURE_STORAGE_EMAIL);
     if (emailAccessToken == "") {
       _secureStorage.deleteValue(App.SECURE_STORAGE_ACCESS_TOKEN);
     }

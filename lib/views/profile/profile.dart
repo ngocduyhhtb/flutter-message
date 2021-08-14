@@ -13,6 +13,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
+SecureStorage _secureStorage = GetIt.I.get<SecureStorage>();
+
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
 
@@ -30,8 +32,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return BlocProvider<ThemeBloc>(
       create: (context) => ThemeBloc(),
-      child: BlocConsumer<ThemeBloc, ThemeState>(
-        listener: (context, themeState) {},
+      child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
           return Scaffold(
             appBar: AppBar(
@@ -84,9 +85,7 @@ class _ProfileState extends State<Profile> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: FadeInImage.assetNetwork(
-                                    image: FirebaseAuth
-                                        .instance.currentUser!.photoURL
-                                        .toString(),
+                                    image: userState.userPhotoUrl,
                                     placeholder: 'assets/images/logo.png',
                                   ),
                                 ),
@@ -94,11 +93,12 @@ class _ProfileState extends State<Profile> {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                            child: Text(
-                              FirebaseAuth.instance.currentUser!.displayName
-                                  .toString(),
-                            ),
+                            margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            child: Text(userState.displayName),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            child: Text(userState.userEmail),
                           ),
                           Container(
                             child: ElevatedButton(
@@ -112,10 +112,10 @@ class _ProfileState extends State<Profile> {
                                   : "Switch Dark Mode"),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                            child: Text(userState.userEmail),
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                          //   child: Text(userState.userEmail),
+                          // ),
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                             child: ElevatedButton.icon(

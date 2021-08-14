@@ -24,19 +24,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         super(LoginState.initial());
 
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginWithCredentialsPressed) {
-      yield* _mapLoginWithCredentialsPressedToState(
-          email: event.email, password: event.password);
+    if (event is LoginWithEmail) {
+      yield* _mapLoginWithEmail(email: event.email, password: event.password);
     } else if (event is LoginWithGoogle) {
       yield* _mapLoginWithGoogleToState();
     }
   }
 
-  Stream<LoginState> _mapLoginWithCredentialsPressedToState(
+  Stream<LoginState> _mapLoginWithEmail(
       {required String email, required String password}) async* {
     yield LoginState.loading();
     try {
-      await _userRepository.signInWithCredentials(email, password);
+      await _userRepository.signInWithEmail(email, password);
       yield LoginState.success();
     } catch (error) {
       _logger.e(error);
@@ -47,11 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> _mapLoginWithGoogleToState() async* {
     yield LoginState.loading();
     try {
-      await _userRepository.signInWithGoogle().then((value) {
-        // _secureStorage.writeValue(
-        //     App.SECURE_STORAGE_USER_PHOTO_URL, value.);
-        _secureStorage.writeValue(App.SECURE_STORAGE_EMAIL, value.email);
-      });
+      await _userRepository.signInWithGoogle();
       yield LoginState.success();
     } catch (error) {
       _logger.e(error);

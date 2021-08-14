@@ -120,7 +120,7 @@ class _SignInFormState extends State<SignInForm> {
 
   void _onFormSubmitted() {
     if (formValidate()) {
-      _loginBloc.add(LoginWithCredentialsPressed(
+      _loginBloc.add(LoginWithEmail(
           email: _emailController.text, password: _passwordController.text));
     }
   }

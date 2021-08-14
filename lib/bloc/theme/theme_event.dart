@@ -9,3 +9,4 @@ abstract class ThemeEvent extends Equatable {
 class ChangedDarkMode extends ThemeEvent {}
 
 class ChangedToLightMode extends ThemeEvent {}
+class ToggleTheme extends ThemeEvent{}

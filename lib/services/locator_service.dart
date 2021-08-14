@@ -8,4 +8,5 @@ Future setupLocator() async {
   GetIt.instance.registerLazySingleton(() => UserRepository());
   GetIt.instance.registerLazySingleton(() => ApiClient());
   GetIt.instance.registerFactory(() => SecureStorage());
+  // GetIt.instance.registerSingleton()
 }

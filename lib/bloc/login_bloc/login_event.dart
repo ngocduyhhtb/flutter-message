@@ -25,11 +25,11 @@ class LoginPasswordChanged extends LoginEvent {
   List<Object> get props => [this.password];
 }
 
-class LoginWithCredentialsPressed extends LoginEvent {
+class LoginWithEmail extends LoginEvent {
   final String email;
   final String password;
 
-  LoginWithCredentialsPressed({required this.email, required this.password});
+  LoginWithEmail({required this.email, required this.password});
 
   @override
   List<Object> get props => [this.email, this.password];

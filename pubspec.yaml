@@ -74,6 +74,7 @@ flutter:
         - asset: assets/fonts/Lato-Regular.ttf
   assets:
     - assets/images/logo.png
+    - assets/images/no_avatar.png
     - assets/Teddy.flr
   #   - images/a_dot_ham.jpeg
 

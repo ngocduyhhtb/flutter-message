@@ -35,11 +35,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapLoadUserToState() async* {
     yield UserState.isLoading();
     try {
+      var displayName =
+          await _secureStorage.readValue(App.SECURE_STORAGE_DISPLAY_NAME);
       var userEmail = await _secureStorage.readValue(App.SECURE_STORAGE_EMAIL);
-      var userPhotoUrl =
+      var photoUrl =
           await _secureStorage.readValue(App.SECURE_STORAGE_USER_PHOTO_URL);
-      _logger.d(userPhotoUrl);
-      yield UserState.isSuccess(userEmail, userPhotoUrl);
+      yield UserState.isSuccess(
+          displayName: displayName,
+          userEmail: userEmail,
+          userPhotoUrl: photoUrl);
     } catch (error) {
       _logger.e(error);
       yield UserState.isFailure();
