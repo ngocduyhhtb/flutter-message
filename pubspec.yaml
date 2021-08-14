@@ -41,7 +41,6 @@ dependencies:
   bot_toast: ^4.0.1
   logger: ^1.0.0
   http: ^0.13.3
-  get: ^4.3.4
   dio: ^4.0.0
   flutter_bloc: ^7.1.0
   json_annotation: ^4.1.0
@@ -76,6 +75,8 @@ flutter:
     - assets/images/logo.png
     - assets/images/no_avatar.png
     - assets/Teddy.flr
+    - assets/inbox.json
+    - assets/sent.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -30,22 +30,12 @@ void main() async {
   Bloc.observer = SimpleBlocObserver();
   final UserRepository userRepository = UserRepository();
   runApp(
-    BlocProvider(
-      create: (context) => AuthenticationBloc(
-        userRepository: userRepository,
-      )..add(Started()),
-      child: MyApp(
-        userRepository: userRepository,
-      ),
-    ),
+    MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final UserRepository _userRepository;
-
-  MyApp({required UserRepository userRepository})
-      : _userRepository = userRepository;
+  final _userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -53,31 +43,38 @@ class MyApp extends StatelessWidget {
       create: (context) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
-          return DismissKeyboard(
-            child: MaterialApp(
-              builder: BotToastInit(),
-              title: 'Flutter Chat App',
-              debugShowCheckedModeBanner: false,
-              theme: themeState.themeData,
-              home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (BuildContext context, AuthenticationState authState) {
-                  if (authState is AuthenticationFailure) {
-                    return SignIn(
-                      userRepository: _userRepository,
-                    );
-                  }
-                  if (authState is AuthenticationSuccess) {
-                    return ChatRoom();
-                  }
-                  return Scaffold(
-                    appBar: AppBar(),
-                    body: Container(
-                      child: Center(
-                        child: Text("Loading"),
+          return BlocProvider<AuthenticationBloc>(
+            create: (context) =>
+                AuthenticationBloc(userRepository: _userRepository)
+                  ..add(Started()),
+            child: DismissKeyboard(
+              child: MaterialApp(
+                builder: BotToastInit(),
+                title: 'Flutter Chat App',
+                debugShowCheckedModeBanner: false,
+                theme: themeState.themeData,
+                home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder:
+                      (BuildContext context, AuthenticationState authState) {
+                    if (authState is AuthenticationFailure) {
+                      return SignIn(
+                        userRepository: _userRepository,
+                      );
+                    }
+                    if (authState is AuthenticationSuccess) {
+                      return ChatRoom();
+                    }
+                    return Scaffold(
+                      appBar: AppBar(),
+                      backgroundColor: App.primaryColor,
+                      body: Container(
+                        child: Center(
+                          child: Text("Loading"),
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           );

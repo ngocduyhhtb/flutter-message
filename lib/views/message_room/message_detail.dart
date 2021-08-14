@@ -3,9 +3,6 @@ import 'package:chat_app/utils/uiUtil/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
-import 'package:telephony/telephony.dart';
 
 // final SmsManager smsManager = GetIt.instance.get<SmsManager>();
 TextEditingController smsController = new TextEditingController();
@@ -19,16 +16,17 @@ class MessageDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: App.primaryColor,
       appBar: AppBar(
+        backgroundColor: App.primaryColor,
         leading: ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          style: ElevatedButton.styleFrom(
-              primary: App.primaryColor, elevation: 0),
+          style:
+              ElevatedButton.styleFrom(primary: App.primaryColor, elevation: 0),
           child: Icon(MaterialIcons.keyboard_backspace),
         ),
         title: Text(smsMessage.address.toString()),
         automaticallyImplyLeading: false,
-        backgroundColor: App.primaryColor,
         elevation: 0,
       ),
       body: Container(
@@ -71,45 +69,40 @@ class MessageDetail extends StatelessWidget {
                 ),
               ),
             ),
-            GetBuilder<SmsService>(
-                init: SmsService(),
-                builder: (value) => Container(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        canBeReply
-                            ? Container(
-                                // margin: EdgeInsets.fromLTRB(20, 3, 20, 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[800],
-                                  borderRadius: BorderRadius.circular(32),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  canBeReply
+                      ? Container(
+                          // margin: EdgeInsets.fromLTRB(20, 3, 20, 3),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: TextField(
+                              controller: smsController,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: 'Nhắn tin',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: TextField(
-                                    controller: smsController,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      hintText: 'Nhắn tin',
-                                      hintStyle: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(MaterialIcons.send),
-                                        onPressed: () => {
-                                          value.sendOneMessage(
-                                              smsMessage.address.toString(),
-                                              smsController.text)
-                                        },
-                                      ),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(MaterialIcons.send),
+                                  onPressed: () => {print("cc")},
                                 ),
-                              )
-                            : Text("This sms can't be reply"),
-                      ],
-                    ))),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Text("This sms can't be reply"),
+                ],
+              ),
+            ),
           ],
         ),
       ),

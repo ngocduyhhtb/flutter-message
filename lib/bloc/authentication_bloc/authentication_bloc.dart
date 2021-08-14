@@ -7,6 +7,7 @@ import 'package:chat_app/utils/uiUtil/flutter_secure_storage.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'constant.dart';
 
 part 'authentication_event.dart';
@@ -18,6 +19,7 @@ final SecureStorage _secureStorage = GetIt.I.get<SecureStorage>();
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
+  final _logger = Logger();
 
   AuthenticationBloc({required UserRepository userRepository})
       : _userRepository = userRepository,
@@ -56,18 +58,15 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
-    var emailAccessToken = "";
-    var isGoogleSignedIn = await _userRepository.isGoogleSignedIn();
-    _secureStorage
-        .readValue(App.SECURE_STORAGE_ACCESS_TOKEN)
-        .then((value) => emailAccessToken = value);
-    _secureStorage.deleteValue(App.SECURE_STORAGE_EMAIL);
-    if (emailAccessToken == "") {
-      _secureStorage.deleteValue(App.SECURE_STORAGE_ACCESS_TOKEN);
-    }
-    if (isGoogleSignedIn) {
-      _userRepository.signOut();
-    }
+    await _secureStorage.deleteValue(App.SECURE_STORAGE_ACCESS_TOKEN);
+    await _secureStorage.deleteValue(App.SECURE_STORAGE_EMAIL);
+    await _secureStorage.deleteValue(App.SECURE_STORAGE_DISPLAY_NAME);
+    await _secureStorage.deleteValue(App.SECURE_STORAGE_USER_PHOTO_URL);
+    _logger.d(
+      _secureStorage.readValue(App.SECURE_STORAGE_ACCESS_TOKEN),
+      _secureStorage.readValue(App.SECURE_STORAGE_EMAIL),
+    );
+    await _userRepository.signOut();
     yield AuthenticationFailure();
   }
 

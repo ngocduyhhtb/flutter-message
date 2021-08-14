@@ -10,6 +10,7 @@ appBarMain(
   return AppBar(
       title: Text(title),
       automaticallyImplyLeading: false,
+      backgroundColor: App.primaryColor,
       elevation: 0,
       actions: action
           ? [

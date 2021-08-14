@@ -4,7 +4,7 @@ import 'package:chat_app/bloc/user_bloc/user_bloc.dart';
 import 'package:chat_app/repository/user/user_repository.dart';
 import 'package:chat_app/utils/uiUtil/constant.dart';
 import 'package:chat_app/utils/uiUtil/flutter_secure_storage.dart';
-import 'package:chat_app/widgets/widget.dart';
+import 'package:chat_app/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,50 +30,51 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeBloc>(
-      create: (context) => ThemeBloc(),
-      child: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (context, themeState) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Profile"),
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              actions: <Widget>[
-                PopupMenuButton(
-                  elevation: 0,
-                  child: Center(
-                    child: Icon(Icons.more_horiz),
+    return BlocProvider<UserBloc>(
+      create: (context) => UserBloc()
+        ..add(
+          LoadUser(),
+        ),
+      child: BlocBuilder<UserBloc, UserState>(
+        builder: (context, userState) {
+          return BlocProvider<ThemeBloc>(
+            create: (context) => ThemeBloc(),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, themeState) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text("Profile"),
+                    automaticallyImplyLeading: false,
+                    elevation: 0,
+                    backgroundColor: App.primaryColor,
+                    actions: <Widget>[
+                      PopupMenuButton(
+                        elevation: 0,
+                        child: Center(
+                          child: Icon(Icons.more_horiz),
+                        ),
+                        itemBuilder: (BuildContext context) {
+                          return List.generate(
+                            1,
+                            (index) {
+                              return PopupMenuItem(
+                                child: Row(
+                                  children: [
+                                    Center(
+                                      child: Text(themeState.isDarkTheme
+                                          ? "Switch Light Mode"
+                                          : "Switch Dark Mode"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  itemBuilder: (BuildContext context) {
-                    return List.generate(
-                      1,
-                      (index) {
-                        return PopupMenuItem(
-                          child: Row(
-                            children: [
-                              Center(
-                                child: Text(themeState.isDarkTheme
-                                    ? "Switch Light Mode"
-                                    : "Switch Dark Mode"),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-            body: BlocProvider<UserBloc>(
-              create: (context) => UserBloc()
-                ..add(
-                  LoadUser(),
-                ),
-              child: BlocBuilder<UserBloc, UserState>(
-                builder: (context, userState) {
-                  return Container(
+                  body: Container(
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -85,6 +86,9 @@ class _ProfileState extends State<Profile> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: FadeInImage.assetNetwork(
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.cover,
                                     image: userState.userPhotoUrl,
                                     placeholder: 'assets/images/logo.png',
                                   ),
@@ -132,9 +136,9 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           );
         },

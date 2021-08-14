@@ -1,21 +1,29 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'message.g.dart';
+
+@JsonSerializable()
 class Message {
-  late String address;
-  late String body;
-  late String dateSent;
+  final String address;
+  final String body;
+  final String name;
 
-  Message({required this.address, required this.body, required this.dateSent});
+  Message({required this.address, required this.body, required this.name});
 
-  Message.fromJson(Map<String, dynamic> json) {
-    address = json['address'];
-    body = json['body'];
-    dateSent = json['dateSent'];
-  }
+  factory Message.fromJson(Map<String, dynamic> json) =>
+      _$MessageFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address'] = this.address;
-    data['body'] = this.body;
-    data['dateSent'] = this.dateSent;
-    return data;
+  Map<String, dynamic> toJson() => _$MessageToJson(this);
+}
+
+class MessageList {
+  late final List<Message> listMessage;
+
+  MessageList({required this.listMessage});
+
+  factory MessageList.fromJson(List<dynamic> parsedJson) {
+    List<Message> listMessage =
+        parsedJson.map((e) => Message.fromJson(e)).toList();
+    return MessageList(listMessage: listMessage);
   }
 }

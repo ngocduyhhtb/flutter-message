@@ -4,7 +4,7 @@ import 'package:chat_app/bloc/login_bloc/login_bloc.dart';
 import 'package:chat_app/repository/user/user_repository.dart';
 import 'package:chat_app/views/authentication/signup.dart';
 import 'package:chat_app/widgets/logo_circle.dart';
-import 'package:chat_app/widgets/widget.dart';
+import 'package:chat_app/widgets/app_bar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

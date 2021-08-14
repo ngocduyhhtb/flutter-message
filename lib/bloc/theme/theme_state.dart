@@ -10,8 +10,9 @@ class ThemeState {
 
   factory ThemeState.Initial() => ThemeState(
         themeData: ThemeData(
+          scaffoldBackgroundColor: App.primaryColor,
           brightness: Brightness.dark,
-          primaryColor: HexColor.fromHex("#212121"),
+          primaryColor: App.primaryColor,
           textSelectionTheme:
               TextSelectionThemeData(cursorColor: App.cursorColor),
         ),
@@ -21,7 +22,8 @@ class ThemeState {
   factory ThemeState.DarkMode() => ThemeState(
         themeData: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: HexColor.fromHex("#212121"),
+          scaffoldBackgroundColor: App.primaryColor,
+          primaryColor: App.primaryColor,
           textSelectionTheme:
               TextSelectionThemeData(cursorColor: App.cursorColor),
         ),
@@ -31,6 +33,7 @@ class ThemeState {
   factory ThemeState.LightMode() => ThemeState(
         themeData: ThemeData(
           brightness: Brightness.light,
+          scaffoldBackgroundColor: App.primaryColor,
           primaryColor: HexColor.fromHex("#FAFAFA"),
         ),
         isDarkTheme: false,

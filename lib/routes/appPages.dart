@@ -1,7 +1,6 @@
 import 'package:chat_app/views/authentication/signin.dart';
 import 'package:chat_app/views/message_room/chat_room.dart';
 import 'package:chat_app/views/profile/profile.dart';
-import 'package:get/get.dart';
 
 import 'appRoutes.dart';
 

@@ -25,6 +25,7 @@ class ApiClient {
     try {
       Response response = await _dio.post(baseUrl + "/auth/google/token");
       if (response.statusCode == 200) {
+        _logger.d(response.data);
         _secureStorage.writeValue(
             App.SECURE_STORAGE_ACCESS_TOKEN, response.data['accessToken']);
         _secureStorage.writeValue(
